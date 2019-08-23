@@ -18,3 +18,13 @@ from keras import optimizers
 
 df_train = pd.read_csv('train.csv')
 df_test = pd.read_csv('test.csv')
+
+df_train.head()
+
+#Splitting into training and test dataset
+df_features = df_train.iloc[:,1:785]
+df_label = df_train.iloc[:,0]
+X_test = df_test.iloc[:,0:784]
+
+from sklearn.model_selection import train_test_split
+X_train
