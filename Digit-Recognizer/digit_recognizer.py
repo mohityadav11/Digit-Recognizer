@@ -44,4 +44,87 @@ num_digits = 10
 y_train = keras.utils.to_categorical(y_train, num_digits)
 y_cv = keras.utils.to_categorical(y_cv, num_digits)
 
-#
+
+#Applying Neural Network to Model with 4 layers (300,100,100,200)
+n_input = 784
+n_hidden_1 = 300;
+n_hidden_2 = 100;
+n_hidden_3 = 100;
+n_hidden_4 = 200;
+num_digits = 10;
+
+Inp = Input(shape=(784,))
+x = Dense(units = n_hidden_1, activation='relu', name = "Hidden_Layer_1")(Inp)
+x = Dense(units = n_hidden_2, activation='relu', name = "Hidden_Layer_2")(x)
+x = Dense(units = n_hidden_3, activation='relu', name = "Hidden_Layer_3")(x)
+x = Dense(units = n_hidden_4, activation='relu', name = "Hidden_Layer_4")(x)
+output = Dense(units = num_digits, activation='softmax', name = "Output_Layer")(x)
+
+model = Model(Inp, output)
+model.summary()
+
+#Insert Hyperparameters
+learning_rate = 0.1
+training_epochs = 20
+batch_size = 100
+sgd= optimizers.SGD(lr = learning_rate)
+
+#Using Stochastic gradient descent and compiling a model
+model.compile(optimizer='sgd', loss='categorical_crossentropy',metrics = ['accuracy'])
+
+#Fitting model
+history1 = model.fit(X_train, y_train, 
+                     batch_size= batch_size,
+                     epochs= training_epochs,
+                     verbose= 2,
+                     validation_data=(X_cv, y_cv))
+
+
+Inp = Input(shape=(784,))
+x = Dense(units = n_hidden_1, activation='relu', name = "Hidden_Layer_1")(Inp)
+x = Dense(units = n_hidden_2, activation='relu', name = "Hidden_Layer_2")(x)
+x = Dense(units = n_hidden_3, activation='relu', name = "Hidden_Layer_3")(x)
+x = Dense(units = n_hidden_4, activation='relu', name = "Hidden_Layer_4")(x)
+output = Dense(units = num_digits, activation='softmax', name = "Output_Layer")(x)
+
+#Now using ADAM as optimizer and compiling a model
+adam = keras.optimizers.Adam(lr = learning_rate)
+model2 = Model(Inp, output)
+model2.compile(loss='categorical_crossentropy',
+               optimizer='adam',
+               metrics=['accuracy'])
+
+#Fitting model
+history2 = model2.fit(X_train, y_train,
+                      batch_size=batch_size,
+                      epochs=training_epochs,
+                      verbose=2,
+                      validation_data=(X_cv, y_cv))
+
+#Changing Learning rate to 0.01 or 0.5
+Inp = Input(shape=(784,))
+x = Dense(units = n_hidden_1, activation='relu', name = "Hidden_Layer_1")(Inp)
+x = Dense(units = n_hidden_2, activation='relu', name = "Hidden_Layer_2")(x)
+x = Dense(units = n_hidden_3, activation='relu', name = "Hidden_Layer_3")(x)
+x = Dense(units = n_hidden_4, activation='relu', name = "Hidden_Layer_4")(x)
+output = Dense(units = num_digits, activation='softmax', name = "Output_Layer")(x)
+
+learning_rate = 0.01
+adam = keras.optimizers.Adam(lr = learning_rate)
+model2a = Model(Inp, output)
+model2a.compile(loss='categorical_crossentropy',
+               optimizer='adam',
+               metrics=['accuracy'])
+
+
+
+
+
+
+
+
+
+
+
+
+
