@@ -156,8 +156,36 @@ history3 = model3.fit(X_train, y_train,
                       epochs=training_epochs,
                       validation_data=(X_cv,y_cv))
 
+#Include Dropout to prevent over-fitting
+n_input = 784
+n_hidden_1 = 300;
+n_hidden_2 = 100;
+n_hidden_3 = 100;
+n_hidden_4 = 200;
+num_digits = 10;
 
+Inp = Input(shape=(784,))
+x = Dense(units = n_hidden_1, activation='relu', name = "Hidden_Layer_1")(Inp)
+x = Dropout(0.3)(x)
+x = Dense(units = n_hidden_2, activation='relu', name = "Hidden_Layer_2")(x)
+x = Dropout(0.3)(x)
+x = Dense(units = n_hidden_3, activation='relu', name = "Hidden_Layer_3")(x)
+x = Dropout(0.3)(x)
+x = Dense(units = n_hidden_4, activation='relu', name = "Hidden_Layer_4")(x)
+output = Dense(units = num_digits, activation='softmax', name = "Output_Layer")(x)
 
+model4 = Model(Inp, output)
+model4.summary()
+
+#Compiling a model
+model4.compile(loss='categorical_crossentropy',
+               optimizer='adam',
+               metrics=['accuracy'])
+
+history = model4.fit(X_train, y_train,
+                      batch_size=batch_size,
+                      epochs=training_epochs,
+                      validation_data=(X_cv,y_cv))
 
 
 
