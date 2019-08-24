@@ -187,7 +187,16 @@ history = model4.fit(X_train, y_train,
                       epochs=training_epochs,
                       validation_data=(X_cv,y_cv))
 
+#Predicting the results with X_test
+test_pred = pd.DataFrame(model4.predict(X_test,batch_size=200))
+test_pred = pd.DataFrame(test_pred.idxmax(axis = 1))
+test_pred.index.name = 'ImageID'
+test_pred = test_pred.rename(columns = {0 : 'Label'}).reset_index()
+test_pred['ImageID'] = test_pred['ImageID'] + 1
+test_pred.head()
 
+#Saving result to csv file
+test_pred.to_csv('mnist_submission.csv', index = False)
 
 
 
