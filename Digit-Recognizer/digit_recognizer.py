@@ -116,6 +116,45 @@ model2a.compile(loss='categorical_crossentropy',
                optimizer='adam',
                metrics=['accuracy'])
 
+history2a = model2a.fit(X_train, y_train,
+                      batch_size=batch_size,
+                      epochs=training_epochs,
+                      verbose=2,
+                      validation_data=(X_cv, y_cv))
+
+#Now Applying Neural network to model with 5 Layers(300,100,100,100,200)
+
+n_input = 784
+n_hidden_1 = 300
+n_hidden_2 = 100
+n_hidden_3 = 100
+n_hidden_4 = 100
+n_hidden_5 = 200
+num_digits = 10
+
+Inp = Input(shape=(784,))
+x = Dense(units = n_hidden_1, activation='relu', name = "Hidden_Layer_1")(Inp)
+x = Dense(units = n_hidden_2, activation='relu', name = "Hidden_Layer_2")(x)
+x = Dense(units = n_hidden_3, activation='relu', name = "Hidden_Layer_3")(x)
+x = Dense(units = n_hidden_4, activation='relu', name = "Hidden_Layer_4")(x)
+x = Dense(units = n_hidden_5, activation='relu', name = "Hidden_Layer_5")(x)
+output = Dense(units = num_digits, activation='softmax', name = "Output_Layer")(x)
+
+model3 = Model(Inp, output)
+model3.summary()
+
+#Using ADAM as optimizer and compiling a model
+adam = keras.optimizers.Adam(lr = 0.01)
+
+model3.compile(loss='categorical_crossentropy',
+               optimizer='adam',
+               metrics=['accuracy'])
+
+#Fitting a model
+history3 = model3.fit(X_train, y_train,
+                      batch_size=batch_size,
+                      epochs=training_epochs,
+                      validation_data=(X_cv,y_cv))
 
 
 
